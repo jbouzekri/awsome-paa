@@ -1,0 +1,14 @@
+{
+    "name": "jbouzekri/awsome",
+    "description": "PHP AWS Product Information Library",
+    "keywords": ["amazon", "aws", "php", "webservice", "rest", "product"],
+    "authors": [
+        {
+            "name": "Jonathan Bouzekri",
+            "email": "jonathan.bouzekri@gmail.com"
+        }
+    ],
+    "require": {
+        
+    }
+}
