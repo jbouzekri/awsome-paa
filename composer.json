@@ -2,6 +2,8 @@
     "name": "jbouzekri/awsome",
     "description": "PHP AWS Product Information Library",
     "keywords": ["amazon", "aws", "php", "webservice", "rest", "product"],
+    "homepage": "http://github.com/jbouzekri/awsome",
+    "license": "MIT",
     "authors": [
         {
             "name": "Jonathan Bouzekri",
