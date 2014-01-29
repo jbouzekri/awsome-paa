@@ -21,6 +21,13 @@ namespace AWSome\PAA\Core;
 class Query 
 {
     /**
+     * Query locale
+     * 
+     * @var string
+     */
+    protected $locale = 'FR';
+    
+    /**
      * Signature Hash
      * 
      * @var string
@@ -33,11 +40,35 @@ class Query
      * @param string $accessKeyId Your AWS access key id which has access to the Product Advertising API
      * @param string $secretAccessKey Your AWS secret access key which has access to the Product Advertising API
      * 
-     * @return Query
+     * @return \AWSome\PAA\Core\Query
      */
     public function buildSignature($accessKeyId, $secretAccessKey)
     {
         $this->signature = "";
+        
+        return $this;
+    }
+    
+    /**
+     * Get locale
+     * 
+     * @return string
+     */
+    public function getLocale()
+    {
+        return $this->locale;
+    }
+    
+    /**
+     * Set a locale
+     * 
+     * @param string $locale the locale for the query
+     * 
+     * @return \AWSome\PAA\Core\Query
+     */
+    public function setLocale($locale)
+    {
+        $this->locale = $locale;
         
         return $this;
     }
