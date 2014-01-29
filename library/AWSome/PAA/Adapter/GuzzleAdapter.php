@@ -11,14 +11,20 @@
 /**
  * @namespace
  */
-namespace AWSome\PAA\Query;
+namespace AWSome\PAA\Adapter;
 
 /**
- * The query object
+ * Adapter using the guzzle library
  *
- * @author Jonathan Bouzekri <jonathan.bouzekri@gmail.com>
+ * @author jobou
  */
-class Query 
+class GuzzleAdapter implements AdapterInterface
 {
-    
+    /**
+     * {@inheritDoc}
+     */
+    public function execute(Query $query) 
+    {
+        
+    }
 }
