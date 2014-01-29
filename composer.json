@@ -1,6 +1,6 @@
 {
-    "name": "jbouzekri/awsome",
-    "description": "PHP AWS Product Information Library",
+    "name": "jbouzekri/awsome-paa",
+    "description": "PHP AWS Product Advertising API Library",
     "keywords": ["amazon", "aws", "php", "webservice", "rest", "product"],
     "homepage": "http://github.com/jbouzekri/awsome",
     "license": "MIT",
