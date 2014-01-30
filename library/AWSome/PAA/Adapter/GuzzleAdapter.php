@@ -20,11 +20,25 @@ namespace AWSome\PAA\Adapter;
  */
 class GuzzleAdapter implements AdapterInterface
 {
+    private $client;
+    
+    /**
+     * 
+     */
+    public function __construct() 
+    {
+        $this->client = new GuzzleClient();
+    }
     /**
      * {@inheritDoc}
      */
     public function execute(Query $query) 
     {
+        $url = $query->getRequestUrl();
         
+        $request = $this->client->get($url);
+        $response = $this->client->send($request);
+        
+        return (string) $response->getBody();
     }
 }
