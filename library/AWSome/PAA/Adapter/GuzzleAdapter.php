@@ -39,7 +39,7 @@ class GuzzleAdapter implements AdapterInterface
     public function execute(Query $query) 
     {
         $url = $query->getRequestUrl();
-        
+        var_dump($url);
         $request = $this->client->get($url);
         
         try {

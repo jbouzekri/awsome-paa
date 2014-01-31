@@ -45,6 +45,16 @@ class Query
     private $signature;
     
     /**
+     * An array of query parameters
+     * 
+     * @var array
+     */
+    private $queryParameters = array(
+        "Service" => "AWSECommerceService",
+        "Version" => "2011-08-01"
+    );
+    
+    /**
      * Build the signature of the query
      * 
      * @param string $accessKeyId Your AWS access key id which has access to the Product Advertising API
@@ -118,12 +128,65 @@ class Query
     }
     
     /**
+     * Override all query parameters
+     * 
+     * @param array $parameters an array of query parameters
+     * 
+     * @return \AWSome\PAA\Core\Query
+     */
+    public function setQueryParameters(array $parameters)
+    {
+        $this->queryParameters = $parameters;
+        
+        return $this;
+    }
+    
+    /**
+     * Add multiple query parameter (or modify the existing) in one go
+     * 
+     * @param array $parameters an array of parameters
+     * 
+     * @return \AWSome\PAA\Core\Query
+     */
+    public function addQueryParameters(array $parameters)
+    {
+        $this->queryParameters = array_merge($this->queryParameters, $parameters);
+        
+        return $this;
+    }
+    
+    /**
+     * Add a query parameter (or modify an existing one)
+     * 
+     * @param string $key the parameter key
+     * @param string $value the parameter value
+     * 
+     * @return \AWSome\PAA\Core\Query
+     */
+    public function addQueryParameter($key, $value)
+    {
+        $this->queryParameters[$key] = $value;
+        
+        return $this;
+    }
+    
+    /**
+     * Get all configured query parameters (except signature and keys)
+     * 
+     * @return array
+     */
+    public function getQueryParameters()
+    {
+        return $this->queryParameters;
+    }
+    
+    /**
      * Get the request url for this query
      * 
      * @return string
      */
     public function getRequestUrl()
     {
-        return $this->getConfiguration()->getBaseUrl();
+        return $this->getConfiguration()->getBaseUrl()."?".http_build_query($this->getQueryParameters());
     }
 }

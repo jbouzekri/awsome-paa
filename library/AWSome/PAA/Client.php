@@ -66,9 +66,9 @@ class Client
      * 
      * @param string $awsAccessKeyId Your AWS access key id which has access to the Product Advertising API
      * @param string $awsSecretAccessKey Your AWS secret access key which has access to the Product Advertising API
-     * @param string $associateTag Your associate tag
+     * @param string $associateTag Your associate tag (not mandatory)
      */
-    public function __construct($awsAccessKeyId, $awsSecretAccessKey, $associateTag = null) 
+    public function __construct($awsAccessKeyId, $awsSecretAccessKey, $associateTag = "Amazon") 
     {
         $this->awsAccessKeyId = $awsAccessKeyId;
         $this->awsSecretAccessKey = $awsSecretAccessKey;
