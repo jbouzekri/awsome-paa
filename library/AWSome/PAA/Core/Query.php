@@ -194,6 +194,9 @@ class Query
      */
     public function getRequestUrl()
     {
-        return $this->getConfiguration()->getBaseUrl()."?".http_build_query($this->getQueryParameters());
+        return $this->getConfiguration()->getBaseUrl() . 
+            "?Operation=" . $this->operation . 
+            "&" . http_build_query($this->getQueryParameters())
+        ;
     }
 }
