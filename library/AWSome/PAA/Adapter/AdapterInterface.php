@@ -13,6 +13,8 @@
  */
 namespace AWSome\PAA\Adapter;
 
+use AWSome\PAA\Core\Query;
+
 /**
  * The interface for all adapter which are sending the query
  * 

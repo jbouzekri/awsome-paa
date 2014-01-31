@@ -25,7 +25,7 @@ class ConfigurationFactory
      * 
      * @var array
      */
-    private $availableConfiguration = array(
+    private static $availableConfiguration = array(
         'FR' => 'AWSome\\PAA\\Configuration\\Configuration'
     );
     
@@ -36,11 +36,11 @@ class ConfigurationFactory
      */
     public function get($locale)
     {
-        if (!array_key_exists($locale, $this->availableConfiguration)) {
+        if (!array_key_exists($locale, static::$availableConfiguration)) {
             throw new ConfigurationException('No configuration specified for locale '.$locale);
         }
         
-        $configuration = new $this->availableConfiguration[$locale];
+        $configuration = new static::$availableConfiguration[$locale];
         if (!$configuration instanceof Configuration) {
             throw new ConfigurationException(
                 'Configuration ' . get_class($configuration) . ' is not an instance of Configuration'
@@ -58,6 +58,6 @@ class ConfigurationFactory
      */
     public function registerConfigurations(array $configurations)
     {
-        $this->availableConfiguration = array_merge($this->availableConfiguration, $configurations);
+        static::$availableConfiguration = array_merge(static::$availableConfiguration, $configurations);
     }
 }

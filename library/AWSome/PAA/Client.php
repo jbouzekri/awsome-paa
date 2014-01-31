@@ -93,7 +93,9 @@ class Client
     public function execute(Query $query)
     {
         $query->buildSignature($this->awsAccessKeyId, $this->awsSecretAccessKey);
-        $this->getAdapter()->execute($query);
+        $response = $this->getAdapter()->execute($query);
+        
+        return $response;
     }
     
     /**

@@ -1,1 +1,5 @@
 nbproject
+/composer.phar
+/vendor/
+/dev/
+/composer.lock
