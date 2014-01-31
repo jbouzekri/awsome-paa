@@ -24,6 +24,13 @@ use AWSome\PAA\Configuration\Configuration;
 class Query 
 {
     /**
+     * The default operation
+     * 
+     * @var string
+     */
+    protected $operation = "ItemSearch";
+    
+    /**
      * Query locale (Default FR)
      * 
      * @var string
@@ -49,7 +56,7 @@ class Query
      * 
      * @var array
      */
-    private $queryParameters = array(
+    protected $queryParameters = array(
         "Service" => "AWSECommerceService",
         "Version" => "2011-08-01"
     );

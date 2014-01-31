@@ -32,6 +32,21 @@ class Client
     private $defaultAdapter = 'AWSome\PAA\Adapter\GuzzleAdapter';
     
     /**
+     * Query type for operation ItemSearch
+     */
+    const QUERY_ITEM_SEARCH = "AWSome\\PAA\\Core\\Query";
+    
+    
+    /**
+     * available query types
+     * 
+     * @var array
+     */
+    private $queryTypes = array(
+        "ItemSearch" => self::QUERY_ITEM_SEARCH
+    );
+    
+    /**
      * Your AWS access key id which has access to the Product Advertising API
      *  
      * @var string
@@ -76,13 +91,29 @@ class Client
     }
     
     /**
+     * Shortcut to create an item search query
+     * 
+     * @return \AWSome\PAA\Core\Query
+     */
+    public function itemSearch()
+    {
+        return $this->createQuery("ItemSearch");
+    }
+    
+    /**
      * Create a query object
      * 
      * @param string $type the type of your query
+     * 
+     * @return \AWSome\PAA\Core\Query
      */
-    public function createQuery($type = "")
+    public function createQuery($type)
     {
-        return new Query();
+        if (!array_key_exists($type, $this->queryTypes)) {
+            throw new Exception\QueryException('Unknown query type : '.$type);
+        }
+        
+        return new $this->queryTypes[$type]();
     }
     
     /**
@@ -124,5 +155,15 @@ class Client
         }
         
         return $this->adapter;
+    }
+    
+    /**
+     * Register new query types
+     * 
+     * @param array $queryTypes
+     */
+    public function registerQueryTypes(array $queryTypes)
+    {
+        $this->queryTypes = array_merge($this->queryTypes, $queryTypes);
     }
 }
