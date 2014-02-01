@@ -49,7 +49,21 @@ class Query
      * 
      * @var string
      */
-    private $signature;
+    protected $signature;
+    
+    /**
+     * The service access key id
+     * 
+     * @var string
+     */
+    protected $accessKeyId;
+    
+    /**
+     * Timestamp of the request
+     * 
+     * @var string 
+     */
+    protected $timestamp;
     
     /**
      * An array of query parameters
@@ -71,8 +85,15 @@ class Query
      */
     public function buildSignature($accessKeyId, $secretAccessKey)
     {
-        $this->signature = "";
+        $this->accessKeyId = $accessKeyId;
         
+        $toSign = "GET\n";
+        $toSign .= $this->getConfiguration()->getHostname()."\n";
+        $toSign .= $this->getConfiguration()->getUri()."\n";
+        $toSign .= http_build_query($this->getAllOrderedQueryParameters());
+
+        $this->signature = base64_encode(hash_hmac("sha256", $toSign, $secretAccessKey, true));
+
         return $this;
     }
     
@@ -113,8 +134,8 @@ class Query
     public function getConfiguration()
     {
         if (!$this->configuration) {
-            $factory = new ConfigurationFactory();
-            $this->configuration = $factory->get($this->getLocale());
+            $configurationFactory = new ConfigurationFactory();
+            $this->configuration = $configurationFactory->get($this->getLocale());
         }
         
         return $this->configuration;
@@ -188,15 +209,61 @@ class Query
     }
     
     /**
+     * Get all query parameters and sort them by key
+     * (Mainly used to generate signature)
+     * 
+     * @return array
+     */
+    public function getAllOrderedQueryParameters()
+    {
+        $queryParameters = $this->queryParameters;
+        $queryParameters["AWSAccessKeyId"] = $this->accessKeyId;
+        $queryParameters["Timestamp"] = $this->getTimestamp();
+        $queryParameters["Operation"] = $this->operation;
+        
+        ksort($queryParameters);
+        
+        return $queryParameters;
+    }
+    
+    /**
+     * Get the request url for this query without security parameters
+     * 
+     * @return string
+     */
+    public function getUnsignedRequestUrl()
+    {
+        return $this->getConfiguration()->getBaseUrl() . 
+            "?" . http_build_query($this->getAllOrderedQueryParameters())
+        ;
+    }
+    
+    /**
      * Get the request url for this query
      * 
      * @return string
      */
     public function getRequestUrl()
     {
-        return $this->getConfiguration()->getBaseUrl() . 
-            "?Operation=" . $this->operation . 
-            "&" . http_build_query($this->getQueryParameters())
+        return $this->getUnsignedRequestUrl() . 
+            "&Signature=" . urlencode($this->signature)
         ;
+    }
+    
+    /**
+     * Get timestamp for query
+     * 
+     * @return string
+     */
+    public function getTimestamp()
+    {
+        if (!$this->timestamp) {
+            // AWS use time format iso 8601 and GMT time zone
+            $date = new \DateTime("now", new \DateTimeZone('GMT'));
+            // Store the timestamp generated to be sure we are using the same one in the auth process and the request
+            $this->timestamp = $date->format("c");
+        }
+        
+        return $this->timestamp;
     }
 }

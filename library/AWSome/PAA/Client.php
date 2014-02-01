@@ -25,6 +25,18 @@ use AWSome\PAA\Adapter\AdapterInterface;
 class Client 
 {
     /**
+     * Hydrate mode
+     * Array
+     */
+    const HYDRATE_ARRAY = "array";
+
+    /**
+     * Hydrate mode
+     * Object
+     */
+    const HYDRATE_OBJECT = "object";
+    
+    /**
      * The default adapter class
      * 
      * @var string
@@ -121,10 +133,35 @@ class Client
      * 
      * @param \AWSome\PAA\Core\Query $query the query to execute
      */
-    public function execute(Query $query)
+    public function execute(Query $query, $hydrate = self::HYDRATE_ARRAY)
     {
         $query->buildSignature($this->awsAccessKeyId, $this->awsSecretAccessKey);
         $response = $this->getAdapter()->execute($query);
+        
+        $result = $this->createResult($query, $response, $hydrate);
+        
+        return $result;
+    }
+    
+    /**
+     * Read response and create the result
+     * 
+     * @param \AWSome\PAA\Core\Query $query the query used to obtain this response
+     * @param string $response the response body
+     * @param string $hydrate the hydratation method
+     * 
+     * @return Result
+     */
+    public function createResult(Query $query, $response, $hydrate)
+    {
+        $parsedXml = new \SimpleXMLElement($response);
+        if ($parsedXml->Error) {
+            throw new Exception\ErrorResponseException(
+                $parsedXml->Error->Message, 
+                $parsedXml->Error->Code,
+                $parsedXml->RequestId
+            );
+        }
         
         return $response;
     }

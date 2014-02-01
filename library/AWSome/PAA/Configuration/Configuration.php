@@ -26,35 +26,83 @@ class Configuration
      * 
      * @var string
      */
-    private $locale = "FR";
+    protected $locale = "FR";
     
     /**
-     * Base Url
+     * Non secured protocol
+     * 
+     * @var string
+     */
+    protected $protocol = "http";
+    
+    
+    /**
+     * Secured protocol
+     * 
+     * @var string
+     */
+    protected $sslProtocol = "https";
+    
+    /**
+     * Hostname
      * 
      * @var string 
      */
-    private $http = "http://webservices.amazon.fr/onca/xml";
+    protected $hostname = "webservices.amazon.fr";
     
     /**
-     * SSL Base Url
+     * Uri
      * 
      * @var string 
      */
-    private $https = "https://webservices.amazon.fr/onca/xml";
+    protected $uri = "/onca/xml";
+    
+    /**
+     * Get protocol
+     * 
+     * @param bool $ssl set to true if ssl request
+     * 
+     * @return string
+     */
+    public function getProtocol($ssl = false)
+    {
+        if ($ssl) {
+            return $this->protocol;
+        }
+        
+        return $this->protocol;
+    }
     
     /**
      * Get the base url
      * 
-     * @param boolean $ssl
-     * @return type
+     * @param boolean $ssl set to true if ssl request
+     * 
+     * @return string
      */
     public function getBaseUrl($ssl = false)
     {
-        if ($ssl) {
-            return $this->https;
-        }
-        
-        return $this->http;
+        return $this->getProtocol($ssl) . '://' . $this->hostname . $this->uri;
+    }
+    
+    /**
+     * Get hostname
+     * 
+     * @return string
+     */
+    public function getHostname()
+    {
+        return $this->hostname;
+    }
+    
+    /**
+     * Get uri
+     * 
+     * @return string
+     */
+    public function getUri()
+    {
+        return $this->uri;
     }
     
     /**
