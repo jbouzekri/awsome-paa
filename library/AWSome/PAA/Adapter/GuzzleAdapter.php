@@ -16,6 +16,7 @@ namespace AWSome\PAA\Adapter;
 use Guzzle\Http\Client;
 use AWSome\PAA\Core\Query;
 use Guzzle\Http\Exception\BadResponseException;
+use AWSome\PAA\Core\Response;
 
 /**
  * Adapter using the guzzle library
@@ -39,16 +40,15 @@ class GuzzleAdapter implements AdapterInterface
     public function execute(Query $query) 
     {
         $url = $query->getRequestUrl();
-        var_dump($url);
+
         $request = $this->client->get($url);
         
         try {
             $response = $request->send($request);
         } catch (BadResponseException $e) {
-            $statusCode = $e->getResponse()->getStatusCode();
             $response = $e->getResponse();
         }
         
-        return (string) $response->getBody();
+        return new Response((string) $response->getBody());
     }
 }

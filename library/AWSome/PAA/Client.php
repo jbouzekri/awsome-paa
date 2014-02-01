@@ -14,11 +14,12 @@
 namespace AWSome\PAA;
 
 use AWSome\PAA\Core\Query;
-use AWSome\PAA\Exception\AwsPaaException;
+use AWSome\PAA\Core\Response;
 use AWSome\PAA\Adapter\AdapterInterface;
+use AWSome\PAA\Core\Parser\ResponseParserInterface;
 
 /**
- * Description of Client
+ * Main for the library
  *
  * @author Jonathan Bouzekri <jonathan.bouzekri@gmail.com>
  */
@@ -41,13 +42,17 @@ class Client
      * 
      * @var string
      */
-    private $defaultAdapter = 'AWSome\PAA\Adapter\GuzzleAdapter';
+    private $defaultAdapter = 'AWSome\\PAA\\Adapter\\GuzzleAdapter';
     
     /**
-     * Query type for operation ItemSearch
+     * available hydrators
+     * 
+     * @var array
      */
-    const QUERY_ITEM_SEARCH = "AWSome\\PAA\\Core\\Query";
-    
+    private $hydrators = array(
+        self::HYDRATE_ARRAY => 'AWSome\\PAA\\Core\\Hydrator\\ArrayHydrator',
+        self::HYDRATE_OBJECT => 'AWSome\\PAA\\Core\\Hydrator\\ObjectHydrator',
+    );
     
     /**
      * available query types
@@ -55,7 +60,7 @@ class Client
      * @var array
      */
     private $queryTypes = array(
-        "ItemSearch" => self::QUERY_ITEM_SEARCH
+        "ItemSearch" => "AWSome\\PAA\\Query\\ItemSearch\\Query"
     );
     
     /**
@@ -82,7 +87,7 @@ class Client
     /**
      * Adapter instance
      * Can be set with {@link setAdapter()} or is instanciated in first call of {@link getAdapter()}
-     * with a class {@link self::DEFAULT_ADAPTER}
+     * with a class {@link self::$defaultAdapter}
      * 
      * @var \AWSome\PAA\Adapter\AdapterInterface
      */
@@ -147,23 +152,17 @@ class Client
      * Read response and create the result
      * 
      * @param \AWSome\PAA\Core\Query $query the query used to obtain this response
-     * @param string $response the response body
+     * @param \AWSome\PAA\Core\Response $response the response object
      * @param string $hydrate the hydratation method
      * 
      * @return Result
      */
-    public function createResult(Query $query, $response, $hydrate)
+    public function createResult(Query $query, Response $response, $hydrate = self::HYDRATE_OBJECT)
     {
-        $parsedXml = new \SimpleXMLElement($response);
-        if ($parsedXml->Error) {
-            throw new Exception\ErrorResponseException(
-                $parsedXml->Error->Message, 
-                $parsedXml->Error->Code,
-                $parsedXml->RequestId
-            );
-        }
+        $hydrator = new $this->hydrators[$hydrate]();
+        $hydrator->setResponse($response);
         
-        return $response;
+        return $query->getParser()->parse($response, $hydrator);
     }
     
     /**

@@ -28,6 +28,16 @@ class Response
     private $raw;
     
     /**
+     * Constructor
+     * 
+     * @param string $data
+     */
+    public function __construct($data) 
+    {
+        $this->raw = $data;
+    }
+    
+    /**
      * Get raw data from the response
      * 
      * @return string
@@ -37,6 +47,11 @@ class Response
         return $this->raw;
     }
     
+    /**
+     * Set raw response data
+     * @param response $raw
+     * @return \AWSome\PAA\Core\Response
+     */
     public function setData($raw)
     {
         $this->raw = $raw;

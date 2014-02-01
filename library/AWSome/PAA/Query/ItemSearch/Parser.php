@@ -11,21 +11,23 @@
 /**
  * @namespace
  */
-namespace AWSome\PAA\Adapter;
+namespace AWSome\PAA\Query\ItemSearch;
 
-use AWSome\PAA\Core\Query;
+use AWSome\PAA\Core\Parser\AbstractXmlParser;
+use AWSome\PAA\Core\Hydrator\AbstractHydrator;
 
 /**
- * The interface for all adapter which are sending the query
- * 
+ * Parser for ItemSearch queries
+ *
  * @author jobou
  */
-interface AdapterInterface 
+class Parser extends AbstractXmlParser
 {
     /**
-     * Execute a query and return a response
-     * 
-     * @return \AWSome\PAA\Core\Response
+     * {@inheritDoc}
      */
-    public function execute(Query $query);
+    public function parseItems(\SimpleXMLElement $parsedXml, AbstractHydrator $hydrator) 
+    {
+        
+    }
 }

@@ -11,21 +11,24 @@
 /**
  * @namespace
  */
-namespace AWSome\PAA\Adapter;
+namespace AWSome\PAA\Query\ItemSearch;
 
-use AWSome\PAA\Core\Query;
+use AWSome\PAA\Core\Query as CoreQuery;
 
 /**
- * The interface for all adapter which are sending the query
- * 
+ * Query for ItemSearch
+ *
  * @author jobou
  */
-interface AdapterInterface 
+class Query extends CoreQuery 
 {
     /**
-     * Execute a query and return a response
+     * Get the parser used for this query
      * 
-     * @return \AWSome\PAA\Core\Response
+     * @return \AWSome\PAA\Query\ItemSearch\Parser
      */
-    public function execute(Query $query);
+    public function getParser()
+    {
+        return new Parser();
+    }
 }
