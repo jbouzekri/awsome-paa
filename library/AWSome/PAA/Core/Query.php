@@ -280,4 +280,26 @@ class Query
 
         return $this;
     }
+
+    /**
+     * List of all authorized request parameters
+     * Extends it to override
+     *
+     * @return array
+     */
+    public function getAuthorizedRequestParameters()
+    {
+        return array();
+    }
+
+    /**
+     * List all validators configured for this query
+     * Extends it to override
+     *
+     * @return array
+     */
+    public function getValidators()
+    {
+        return array();
+    }
 }
