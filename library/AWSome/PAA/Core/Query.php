@@ -266,4 +266,18 @@ class Query
         
         return $this->timestamp;
     }
+    
+    /**
+     * Set the associate tag
+     * 
+     * @param string $associateTag the associate tag to set in the query
+     * 
+     * @return \AWSome\PAA\Core\Query
+     */
+    public function setAssociateTag($associateTag)
+    {
+        $this->addQueryParameter("AssociateTag", $associateTag);
+        
+        return $this;
+    }
 }

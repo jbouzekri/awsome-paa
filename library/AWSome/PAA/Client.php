@@ -140,7 +140,9 @@ class Client
      */
     public function execute(Query $query, $hydrate = self::HYDRATE_ARRAY)
     {
+        $query->setAssociateTag($this->associateTag);
         $query->buildSignature($this->awsAccessKeyId, $this->awsSecretAccessKey);
+        
         $response = $this->getAdapter()->execute($query);
         
         $result = $this->createResult($query, $response, $hydrate);
