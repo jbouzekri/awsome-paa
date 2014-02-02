@@ -28,41 +28,41 @@ abstract class AbstractXmlParser implements ResponseParserInterface
     /**
      * {@inheritDoc}
      */
-    public function parse(Response $response, AbstractHydrator $hydrator) 
+    public function parse(Response $response, AbstractHydrator $hydrator)
     {
         $parsedXml = new \SimpleXMLElement($response->getData());
-        
+
         $this->parseError($parsedXml, $hydrator);
 
         $isValid = (string) $parsedXml->Items->Request->IsValid === "True";
         $hydrator->setIsValid($isValid);
-        
+
         $requestId = (string) $parsedXml->OperationRequest->RequestId;
         $hydrator->setRequestId($requestId);
-        
+
         $processingTime = (float) $parsedXml->OperationRequest->RequestProcessingTime;
         $hydrator->setProcessingTime($processingTime);
-        
+
         if ($isValid)
         {
             $this->parseItems($parsedXml, $hydrator);
         }
-        
+
         return $hydrator->getResult();
     }
-    
+
     /**
      * Parse response for generic errors
-     * 
+     *
      * @param \SimpleXMLElement $parsedXml the main element of the parsed response
-     * 
+     *
      * @throw \AWSome\PAA\Exception\ErrorResponseException
      */
     public function parseError(\SimpleXMLElement $parsedXml, AbstractHydrator $hydrator)
     {
         if ($parsedXml->Error) {
             throw new ErrorResponseException(
-                $parsedXml->Error->Message, 
+                $parsedXml->Error->Message,
                 $parsedXml->Error->Code,
                 $parsedXml->RequestId
             );
@@ -77,7 +77,7 @@ abstract class AbstractXmlParser implements ResponseParserInterface
             }
         }
     }
-    
+
     /**
      * Parse custom result for each query
      */

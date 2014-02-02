@@ -26,29 +26,29 @@ use AWSome\PAA\Core\Response;
 class GuzzleAdapter implements AdapterInterface
 {
     private $client;
-    
+
     /**
-     * 
+     *
      */
-    public function __construct() 
+    public function __construct()
     {
         $this->client = new Client();
     }
     /**
      * {@inheritDoc}
      */
-    public function execute(Query $query) 
+    public function execute(Query $query)
     {
         $url = $query->getRequestUrl();
 
         $request = $this->client->get($url);
-        
+
         try {
             $response = $request->send($request);
         } catch (BadResponseException $e) {
             $response = $e->getResponse();
         }
-        
+
         return new Response((string) $response->getBody());
     }
 }
