@@ -40,4 +40,11 @@ interface ItemSearchHydratorInterface
      * @param string $moreSearchResultsUrl
      */
     public function setMoreSearchResultsUrl($moreSearchResultsUrl);
+
+    /**
+     * Create an item
+     *
+     * @return mixed
+     */
+    public function createItem();
 }

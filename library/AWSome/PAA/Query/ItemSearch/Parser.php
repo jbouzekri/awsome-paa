@@ -37,11 +37,31 @@ class Parser extends AbstractXmlParser
         $moreSearchResultsUrl = (string) $parsedXml->Items->MoreSearchResultsUrl;
         $this->result['MoreSearchResultsUrl'] = $moreSearchResultsUrl;
 
-        foreach ($parsedXml->Items->Item as $item) {
-            $formatedItem = array();
-            $formatedItem['ASIN'] = (string) $item->ASIN;
+        $responseGroup = (string) $parsedXml->Items->Request->ItemSearchRequest->ResponseGroup;
+        $responseGroup = __NAMESPACE__."\\ResponseGroup\\".$responseGroup;
+        $elements = $responseGroup::elements();
 
+        foreach ($parsedXml->Items->Item as $item) {
+
+            $formatedItem = $this->parseItem($item, $elements);
             $this->result['items'][] = $formatedItem;
         }
+    }
+
+    public function parseItem(\SimpleXMLElement $item, $responseGroup)
+    {
+        $object = array();
+        foreach ($responseGroup as $key => $position) {
+            $position = explode("\\", $position);
+
+            // First level item
+            if (count($position) == 1) {
+
+                $position = $position[0];
+                $object[$key] = (string) $item->$position;
+            }
+        }
+
+        return $object;
     }
 }

@@ -45,4 +45,12 @@ class ArrayHydrator extends CoreArrayHydrator implements ItemSearchHydratorInter
     {
         $this->result['moreSearchResultsUrl'] = $moreSearchResultsUrl;
     }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function createItem()
+    {
+        return array();
+    }
 }
