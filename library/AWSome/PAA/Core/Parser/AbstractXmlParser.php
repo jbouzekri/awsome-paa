@@ -17,6 +17,7 @@ use AWSome\PAA\Exception\ErrorResponseException;
 use AWSome\PAA\Core\Parser\ResponseParserInterface;
 use AWSome\PAA\Core\Response;
 use AWSome\PAA\Core\Hydrator\AbstractHydrator;
+use AWSome\PAA\Core\Query;
 
 /**
  * Description of XmlParser
@@ -26,29 +27,46 @@ use AWSome\PAA\Core\Hydrator\AbstractHydrator;
 abstract class AbstractXmlParser implements ResponseParserInterface
 {
     /**
+     * The hydrator used to build the result
+     *
+     * @var \AWSome\PAA\Core\Hydrator\AbstractHydrator\AbstractHydrator
+     */
+    protected $hydrator;
+
+    /**
+     * The result build
+     *
+     * @var mixed
+     */
+    protected $result = array();
+
+    /**
      * {@inheritDoc}
      */
-    public function parse(Response $response, AbstractHydrator $hydrator)
+    public function parse(Query $query, Response $response, $hydrate)
     {
         $parsedXml = new \SimpleXMLElement($response->getData());
 
-        $this->parseError($parsedXml, $hydrator);
+        $this->parseError($parsedXml);
 
         $isValid = (string) $parsedXml->Items->Request->IsValid === "True";
-        $hydrator->setIsValid($isValid);
+        //$this->hydrator->setIsValid($isValid);
+        $this->result['IsValid'] = $isValid;
 
         $requestId = (string) $parsedXml->OperationRequest->RequestId;
-        $hydrator->setRequestId($requestId);
+        //$this->hydrator->setRequestId($requestId);
+        $this->result['RequestId'] = $requestId;
 
         $processingTime = (float) $parsedXml->OperationRequest->RequestProcessingTime;
-        $hydrator->setProcessingTime($processingTime);
+        //$this->hydrator->setProcessingTime($processingTime);
+        $this->result['ProcessingTime'] = $processingTime;
 
         if ($isValid)
         {
-            $this->parseItems($parsedXml, $hydrator);
+            $this->parseItems($parsedXml);
         }
 
-        return $hydrator->getResult();
+        return $this->result;
     }
 
     /**
@@ -58,7 +76,7 @@ abstract class AbstractXmlParser implements ResponseParserInterface
      *
      * @throw \AWSome\PAA\Exception\ErrorResponseException
      */
-    public function parseError(\SimpleXMLElement $parsedXml, AbstractHydrator $hydrator)
+    public function parseError(\SimpleXMLElement $parsedXml)
     {
         if ($parsedXml->Error) {
             throw new ErrorResponseException(
@@ -70,9 +88,13 @@ abstract class AbstractXmlParser implements ResponseParserInterface
 
         if ($parsedXml->Items->Request->Errors && $parsedXml->Items->Request->Errors->Error) {
             foreach ($parsedXml->Items->Request->Errors->Error as $error) {
-                $hydrator->buildError(
+                /*$this->hydrator->buildError(
                     (string) $error->Code,
                     (string) $error->Message
+                );*/
+                $this->result['errors'][] = array(
+                    'code' => (string) $error->Code,
+                    'message' => (string) $error->Message
                 );
             }
         }
@@ -81,5 +103,5 @@ abstract class AbstractXmlParser implements ResponseParserInterface
     /**
      * Parse custom result for each query
      */
-    public abstract function parseItems(\SimpleXMLElement $parsedXml, AbstractHydrator $hydrator);
+    public abstract function parseItems(\SimpleXMLElement $parsedXml);
 }

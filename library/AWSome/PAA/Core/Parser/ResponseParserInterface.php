@@ -13,22 +13,23 @@
  */
 namespace AWSome\PAA\Core\Parser;
 
-use AWSome\PAA\Core\Hydrator\AbstractHydrator;
+use AWSome\PAA\Core\Query;
 use AWSome\PAA\Core\Response;
 
 /**
  *
  * @author jobou
  */
-interface ResponseParserInterface 
+interface ResponseParserInterface
 {
     /**
      * Parse the response and return an hydrated result
-     * 
+     *
+     * @param \AWSome\PAA\Core\Query $query the query used to obtain the response
      * @param \AWSome\PAA\Core\Response $response the response object to parse
-     * @param \AWSome\PAA\Core\Hydrator\AbstractHydrator $hydrator the hydrator method
-     * 
+     * @param string $hydrate the hydrator method
+     *
      * @return mixed
      */
-    public function parse(Response $response, AbstractHydrator $hydrator);
+    public function parse(Query $query, Response $response, $hydrate);
 }

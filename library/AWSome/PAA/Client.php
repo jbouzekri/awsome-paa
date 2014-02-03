@@ -45,16 +45,6 @@ class Client
     private $defaultAdapter = 'AWSome\\PAA\\Adapter\\GuzzleAdapter';
 
     /**
-     * available hydrators
-     *
-     * @var array
-     */
-    private $hydrators = array(
-        self::HYDRATE_ARRAY => 'AWSome\\PAA\\Core\\Hydrator\\ArrayHydrator',
-        self::HYDRATE_OBJECT => 'AWSome\\PAA\\Core\\Hydrator\\ObjectHydrator',
-    );
-
-    /**
      * available query types
      *
      * @var array
@@ -92,6 +82,16 @@ class Client
      * @var \AWSome\PAA\Adapter\AdapterInterface
      */
     private $adapter;
+
+    /**
+     * available hydrators
+     *
+     * @var array
+     */
+    protected $hydrators = array(
+        self::HYDRATE_ARRAY => 'AWSome\\PAA\\Core\\Hydrator\\ArrayHydrator',
+        self::HYDRATE_OBJECT => 'AWSome\\PAA\\Core\\Hydrator\\ObjectHydrator',
+    );
 
     /**
      * Constructor
@@ -146,35 +146,20 @@ class Client
      */
     public function execute(Query $query, $hydrate = self::HYDRATE_ARRAY, $validate = false)
     {
+        // Validate the query
         if ($validate) {
             $this->validate($query);
         }
 
+        // Set signature
         $query->setAssociateTag($this->associateTag);
         $query->buildSignature($this->awsAccessKeyId, $this->awsSecretAccessKey);
 
+        // Send the query
         $response = $this->getAdapter()->execute($query);
 
-        $result = $this->createResult($query, $response, $hydrate);
-
-        return $result;
-    }
-
-    /**
-     * Read response and create the result
-     *
-     * @param \AWSome\PAA\Core\Query $query the query used to obtain this response
-     * @param \AWSome\PAA\Core\Response $response the response object
-     * @param string $hydrate the hydratation method
-     *
-     * @return mixed
-     */
-    public function createResult(Query $query, Response $response, $hydrate = self::HYDRATE_OBJECT)
-    {
-        $hydrator = new $this->hydrators[$hydrate]();
-        $hydrator->setResponse($response);
-
-        return $query->getParser()->parse($response, $hydrator);
+        // Parse the response and return the result
+        return $query->getParser()->parse($query, $response, $hydrate);
     }
 
     /**

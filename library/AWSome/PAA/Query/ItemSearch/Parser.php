@@ -26,8 +26,22 @@ class Parser extends AbstractXmlParser
     /**
      * {@inheritDoc}
      */
-    public function parseItems(\SimpleXMLElement $parsedXml, AbstractHydrator $hydrator) 
+    public function parseItems(\SimpleXMLElement $parsedXml)
     {
-        
+        $totalResults = (int) $parsedXml->Items->TotalResults;
+        $this->result['TotalResults'] = $totalResults;
+
+        $totalPages = (int) $parsedXml->Items->TotalPages;
+        $this->result['TotalPages'] = $totalPages;
+
+        $moreSearchResultsUrl = (string) $parsedXml->Items->MoreSearchResultsUrl;
+        $this->result['MoreSearchResultsUrl'] = $moreSearchResultsUrl;
+
+        foreach ($parsedXml->Items->Item as $item) {
+            $formatedItem = array();
+            $formatedItem['ASIN'] = (string) $item->ASIN;
+
+            $this->result['items'][] = $formatedItem;
+        }
     }
 }
