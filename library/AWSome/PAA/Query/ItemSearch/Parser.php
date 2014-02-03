@@ -26,7 +26,7 @@ class Parser extends AbstractXmlParser
     /**
      * {@inheritDoc}
      */
-    public function parseItems(\SimpleXMLElement $parsedXml)
+    public function parseItems(\SimpleXMLElement $parsedXml, AbstractHydrator $hydrator)
     {
         $totalResults = (int) $parsedXml->Items->TotalResults;
         $this->result['TotalResults'] = $totalResults;

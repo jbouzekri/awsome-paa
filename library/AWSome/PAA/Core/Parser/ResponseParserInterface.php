@@ -15,6 +15,7 @@ namespace AWSome\PAA\Core\Parser;
 
 use AWSome\PAA\Core\Query;
 use AWSome\PAA\Core\Response;
+use AWSome\PAA\Core\Hydrator\AbstractHydrator;
 
 /**
  *
@@ -31,5 +32,5 @@ interface ResponseParserInterface
      *
      * @return mixed
      */
-    public function parse(Query $query, Response $response, $hydrate);
+    public function parse(Query $query, Response $response, AbstractHydrator $hydrate);
 }

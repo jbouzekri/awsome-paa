@@ -158,8 +158,34 @@ class Client
         // Send the query
         $response = $this->getAdapter()->execute($query);
 
+        // Get the hydrator configured for the query
+        $hydrator = $this->getHydrator($query, $hydrate);
+
         // Parse the response and return the result
-        return $query->getParser()->parse($query, $response, $hydrate);
+        return $query->getParser()->parse($query, $response, $hydrator);
+    }
+
+    /**
+     * Instantiate the hydrator for the parser
+     *
+     * @param \AWSome\PAA\Core\Query $query
+     * @param type $hydrate
+     *
+     * @return \AWSome\PAA\Core\Hydrator\AbstractHydrator
+     *
+     * @throws Exception\QueryException
+     */
+    public function getHydrator(Query $query, $hydrate = self::HYDRATE_ARRAY)
+    {
+        $queryNamespace = explode('\\', get_class($query));
+        end($queryNamespace);
+
+        $hydrateClass = "AWSome\\PAA\\Query\\".prev($queryNamespace)."\\Hydrator\\".ucfirst($hydrate)."Hydrator";
+        if (!class_exists($hydrateClass)) {
+            $hydrateClass = $this->hydrators[$hydrate];
+        }
+
+        return new $hydrateClass();
     }
 
     /**
