@@ -14,7 +14,7 @@
 namespace AWSome\PAA\Query\ItemSearch;
 
 use AWSome\PAA\Core\Parser\AbstractXmlParser;
-use AWSome\PAA\Core\Hydrator\AbstractHydrator;
+use AWSome\PAA\Exception\ConfigurationException;
 
 /**
  * Parser for ItemSearch queries
@@ -26,8 +26,16 @@ class Parser extends AbstractXmlParser
     /**
      * {@inheritDoc}
      */
-    public function parseItems(\SimpleXMLElement $parsedXml, AbstractHydrator $hydrator)
+    public function parseItems(\SimpleXMLElement $parsedXml, $hydrator)
     {
+        // Verify we have a correct hydrator to manage ItemSearch response
+        if (!$hydrator instanceof Hydrator\ItemSearchHydratorInterface) {
+            throw new ConfigurationException(
+                "This hydrator is not capable to understant ItemSearch Response. " .
+                "It does not implements ItemSearchHydratorInterface"
+            );
+        }
+
         $totalResults = (int) $parsedXml->Items->TotalResults;
         $this->result['TotalResults'] = $totalResults;
 

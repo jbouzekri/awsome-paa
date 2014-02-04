@@ -68,7 +68,7 @@ abstract class AbstractXmlParser implements ResponseParserInterface
      */
     public function parseError(\SimpleXMLElement $parsedXml)
     {
-        if ($parsedXml->Error) {
+        if (isset($parsedXml->Error)) {
             throw new ErrorResponseException(
                 $parsedXml->Error->Message,
                 $parsedXml->Error->Code,
@@ -76,7 +76,7 @@ abstract class AbstractXmlParser implements ResponseParserInterface
             );
         }
 
-        if ($parsedXml->Items->Request->Errors && $parsedXml->Items->Request->Errors->Error) {
+        if (isset($parsedXml->Items->Request->Errors) && isset($parsedXml->Items->Request->Errors->Error)) {
             foreach ($parsedXml->Items->Request->Errors->Error as $error) {
                 /*$this->hydrator->buildError(
                     (string) $error->Code,
@@ -93,5 +93,5 @@ abstract class AbstractXmlParser implements ResponseParserInterface
     /**
      * Parse custom result for each query
      */
-    public abstract function parseItems(\SimpleXMLElement $parsedXml, AbstractHydrator $hydrator);
+    public abstract function parseItems(\SimpleXMLElement $parsedXml, $hydrator);
 }
