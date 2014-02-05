@@ -1,4 +1,27 @@
-awsome
-======
+AWSome PAA PHP
+==============
 
-PHP AWS Product Information Library
+Introduction
+------------
+
+This is an implementation of a client for the **Amazon Product Advertising API** in PHP. 
+This API provides tools for querying the amazon product database and even manage cart via webservices.
+ 
+The official documentation of this service is available on [docs.aws.amazon.fr](http://docs.aws.amazon.com/AWSECommerceService/2011-08-01/DG/Welcome.html).
+
+Requirements
+------------
+
+In order to use this client, you will need to become a Product Advertising API Developer. 
+You can follow the instruction provided on [docs.aws.amazon.fr](http://docs.aws.amazon.com/AWSECommerceService/2011-08-01/DG/becomingDev.html)
+
+After signing up, you will receive an access key and secret which will be used by this API to append a signature to your query.
+
+Optionnaly, you can even become an associate. It provides opportunities to earn money thanks to the traffic you send to amazon 
+via the links generated in the service response.
+
+Examples
+--------
+
+* ItemSearch Queries : find products on Amazon
+    * [Searching by Keyword](doc/searching_by_keyword.md)
