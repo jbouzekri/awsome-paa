@@ -24,4 +24,11 @@ Examples
 --------
 
 * ItemSearch Queries : find products on Amazon
-    * [Searching by Keyword](doc/searching_by_keyword.md)
+    * [Searching by Keyword](doc/ItemSearch/searching_by_keyword.md)
+
+Roadmap
+-------
+
+For now, only ItemSearch queries and array hydratation for results have been implemented. 
+I am going to add the query one by one and after that I will add an object hydratation mode.
+Do not hesitate to contribute to this project.
