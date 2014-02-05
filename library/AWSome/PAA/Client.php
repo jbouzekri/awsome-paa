@@ -17,6 +17,7 @@ use AWSome\PAA\Core\Query;
 use AWSome\PAA\Core\Response;
 use AWSome\PAA\Adapter\AdapterInterface;
 use AWSome\PAA\Core\Parser\ResponseParserInterface;
+use AWSome\PAA\Core\Hydrator\AbstractHydrator;
 
 /**
  * Main for the library
@@ -25,18 +26,6 @@ use AWSome\PAA\Core\Parser\ResponseParserInterface;
  */
 class Client
 {
-    /**
-     * Hydrate mode
-     * Array
-     */
-    const HYDRATE_ARRAY = "array";
-
-    /**
-     * Hydrate mode
-     * Object
-     */
-    const HYDRATE_OBJECT = "object";
-
     /**
      * The default adapter class
      *
@@ -89,8 +78,7 @@ class Client
      * @var array
      */
     protected $hydrators = array(
-        self::HYDRATE_ARRAY => 'AWSome\\PAA\\Core\\Hydrator\\ArrayHydrator',
-        self::HYDRATE_OBJECT => 'AWSome\\PAA\\Core\\Hydrator\\ObjectHydrator',
+        AbstractHydrator::HYDRATE_ARRAY => 'AWSome\\PAA\\Core\\Hydrator\\ArrayHydrator'
     );
 
     /**
