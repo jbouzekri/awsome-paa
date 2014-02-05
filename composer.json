@@ -1,6 +1,6 @@
 {
-    "name": "jbouzekri/awsome-paa",
-    "description": "PHP AWS Product Advertising API Library",
+    "name": "awsome/paa",
+    "description": "This is an implementation of a client for the Amazon Product Advertising API in PHP.",
     "keywords": ["amazon", "aws", "php", "webservice", "rest", "product"],
     "homepage": "http://github.com/jbouzekri/awsome",
     "license": "MIT",
@@ -11,7 +11,8 @@
         }
     ],
     "require": {
-        "guzzle/guzzle":"~3.7"
+        "guzzle/guzzle":"~3.7",
+        "php": ">=5.5"
     },
     "autoload": {
         "psr-0": {

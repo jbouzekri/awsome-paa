@@ -20,6 +20,21 @@ After signing up, you will receive an access key and secret which will be used b
 Optionnaly, you can even become an associate. It provides opportunities to earn money thanks to the traffic you send to amazon 
 via the links generated in the service response.
 
+Installation
+------------
+
+You can use composer for installation.
+
+Add the repository to the composer.json file of your project and run the update or install command.
+
+``` json
+{
+    "require": {
+        "awsome/paa": "0.1.*"
+    }
+}
+```
+
 Examples
 --------
 
