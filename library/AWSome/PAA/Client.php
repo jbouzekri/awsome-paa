@@ -123,7 +123,7 @@ class Client
      *
      * @throw \AWSome\PAA\Exception\RequestParameterException
      */
-    public function execute(Query $query, $hydrate = self::HYDRATE_ARRAY, $validate = false)
+    public function execute(Query $query, $hydrate = AbstractHydrator::ARRAY_HYDRATATION, $validate = false)
     {
         // Validate the query
         if ($validate) {
