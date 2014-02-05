@@ -23,16 +23,6 @@ use AWSome\PAA\Core\Query as CoreQuery;
 class Query extends CoreQuery
 {
     /**
-     * Get the parser used for this query
-     *
-     * @return \AWSome\PAA\Query\ItemSearch\Parser
-     */
-    public function getParser()
-    {
-        return new Parser();
-    }
-
-    /**
      * Set search index in item search query
      * The value passed is validated according to locale
      *

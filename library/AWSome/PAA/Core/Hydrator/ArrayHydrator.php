@@ -23,51 +23,12 @@ use AWSome\PAA\Core\Response;
 class ArrayHydrator extends AbstractHydrator
 {
     /**
-     * Constructor
-     * Instantiate the result base
+     * {@inheritDoc}
      */
-    public function __construct() 
+    public function hydrate(Response $response)
     {
-        $this->result = array();
-    }
+        $parsedXml = simplexml_load_string($response->getData());
 
-    /**
-     * {@inheritDoc}
-     */
-    public function addError(array $error) 
-    {
-        $this->result['errors'][] = $error;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setIsValid($isValid) 
-    {
-        $this->result['isValid'] = $isValid;
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public function setResponse(Response $response) 
-    {
-        $this->result['response']['raw'] = $response->getData();
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public function setRequestId($requestId) 
-    {
-        $this->result['requestId'] = $requestId;
-    }
-    
-    /**
-     * {@inheritDoc}
-     */
-    public function setProcessingTime($processingTime) 
-    {
-        $this->result['processingTime'] = $processingTime;
+        return json_decode(json_encode($parsedXml), true);
     }
 }

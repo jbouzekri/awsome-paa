@@ -15,6 +15,8 @@ namespace AWSome\PAA\Core;
 
 use AWSome\PAA\Configuration\ConfigurationFactory;
 use AWSome\PAA\Configuration\Configuration;
+use AWSome\PAA\Exception\ConfigurationException;
+use AWSome\PAA\Core\Hydrator\AbstractHydrator;
 
 /**
  * The query object
@@ -73,6 +75,15 @@ class Query
     protected $queryParameters = array(
         "Service" => "AWSECommerceService",
         "Version" => "2011-08-01"
+    );
+
+    /**
+     * Supported hydratation method for the query
+     *
+     * @var array
+     */
+    protected $hydratationMethod = array(
+        AbstractHydrator::ARRAY_HYDRATATION => "AWSome\\PAA\\Core\\Hydrator\\ArrayHydrator"
     );
 
     /**
@@ -301,5 +312,35 @@ class Query
     public function getValidators()
     {
         return array();
+    }
+
+
+    /**
+     * Get the hydratator for the query
+     *
+     * @param string $hydrateMode the hydratation mode configured during query execution
+     *
+     * @return \AWSome\PAA\Core\Hydrator\AbstractHydrator
+     *
+     * @throws ConfigurationException
+     */
+    public function getHydrator($hydrateMode)
+    {
+        if (!array_key_exists($hydrateMode, $this->hydratationMethod)) {
+            throw new ConfigurationException(
+                'Query ' . __CLASS__ . 'does not support hydrate mode' . $hydrateMode
+                . 'Use one of the following : ' . array_keys($this->hydratationMethod)
+            );
+        }
+
+        $hydrator = new $this->hydratationMethod[$hydrateMode]();
+        if (!$hydrator instanceof AbstractHydrator) {
+            throw new ConfigurationException(
+                'Hydrator '. get_class($hydrator)
+                . ' does not extends AWSome\\PAA\\Core\\Hydrator\\AbstractHydrator'
+            );
+        }
+
+        return $hydrator;
     }
 }
