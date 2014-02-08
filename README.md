@@ -48,6 +48,7 @@ Examples
     * [Searching by Theme in a Specific Category](doc/ItemSearch/searching_by_theme_in_category.md)
 * ItemLookup Queries : Given an Item identifier, the ItemLookup operation returns some or all of the item attributes, depending on the response group specified in the request
     * [Lookup by UPC](doc/ItemLookup/searching_by_upc.md)
+    * [Lookup by ISBN](doc/ItemLookup/searching_by_isbn.md)
 
 Roadmap
 -------
