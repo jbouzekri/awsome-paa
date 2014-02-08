@@ -343,4 +343,21 @@ class Query
 
         return $hydrator;
     }
+
+    /**
+     * Register new hydrators (or override existing one)
+     *
+     * @param array $hydrators an array of hydrator.method
+     *      array(
+     *          "object" => "My\\Namespace\\ObjectHydrator"
+     *      )
+     *
+     * @return \AWSome\PAA\Core\Query
+     */
+    public function registerHydrators(array $hydrators)
+    {
+        $this->hydratationMethod = array_merge($this->hydratationMethod, $hydrators);
+
+        return $this;
+    }
 }
