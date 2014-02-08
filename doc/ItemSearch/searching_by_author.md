@@ -1,5 +1,5 @@
 ItemSearch : Searching by author
-=================================
+================================
 
 This is an example of a query when searching product by author.
 This example uses the ItemSearch operation to find books on Amazon with the Author J.K. Rowling. (cf [amazon example](http://docs.aws.amazon.com/AWSECommerceService/latest/DG/EX_SearchingbyAuthor.html))

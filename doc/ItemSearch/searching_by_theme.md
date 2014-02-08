@@ -1,5 +1,5 @@
 ItemSearch : Searching by theme
-=================================
+===============================
 
 This is an example of a query when searching product by theme. Amazon use keywords for theme.
 This example uses the ItemSearch operation to find products related to the theme Travel. (cf [amazon example](http://docs.aws.amazon.com/AWSECommerceService/latest/DG/EX_SearchingbyTheme.html))

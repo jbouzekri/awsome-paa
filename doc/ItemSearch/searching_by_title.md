@@ -1,5 +1,5 @@
 ItemSearch : Searching by title
-=================================
+===============================
 
 This is an example of a query when searching product by title.
 In this example, we search in Music index, products having title with the word "Blue" (cf [amazon example](http://docs.aws.amazon.com/AWSECommerceService/latest/DG/EX_SearchingbyTitle.html))

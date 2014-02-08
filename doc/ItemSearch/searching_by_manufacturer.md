@@ -1,5 +1,5 @@
 ItemSearch : Searching by manufacturer
-=================================
+======================================
 
 This is an example of a query when searching product by manufacturer.
 This example uses the ItemSearch operation to find electronics on Amazon with the Manufacturer Sony. To search the Electronics category, we use the Electronics search index. (cf [amazon example](http://docs.aws.amazon.com/AWSECommerceService/latest/DG/EX_SearchingbyManufacturer.html))

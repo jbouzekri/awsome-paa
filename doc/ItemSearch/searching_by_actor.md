@@ -1,5 +1,5 @@
 ItemSearch : Searching by actor
-=================================
+===============================
 
 This is an example of a query when searching product by actor.
 This example uses the ItemSearch operation to find DVDs on Amazon with the Actor Tom Hanks. (cf [amazon example](http://docs.aws.amazon.com/AWSECommerceService/latest/DG/EX_SearchingbyActor.html))
