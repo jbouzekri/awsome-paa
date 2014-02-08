@@ -75,7 +75,7 @@ class Query extends CoreQuery
     }
 
     /**
-     * Set manufacturer parameter
+     * Set Manufacturer parameter
      *
      * @param string $manufacturer the manufacturer you want to search
      *
@@ -84,6 +84,20 @@ class Query extends CoreQuery
     public function setManufacturer($manufacturer)
     {
         $this->addQueryParameter("Manufacturer", $manufacturer);
+
+        return $this;
+    }
+
+    /**
+     * Set Author parameter
+     *
+     * @param string $author the author you want to search
+     *
+     * @return \AWSome\PAA\Query\ItemSearch\Query
+     */
+    public function setAuthor($author)
+    {
+        $this->addQueryParameter("Author", $author);
 
         return $this;
     }
