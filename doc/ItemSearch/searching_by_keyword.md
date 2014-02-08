@@ -2,16 +2,17 @@ ItemSearch : Searching by keyword
 =================================
 
 This is an example of a query when searching product by keywords.
+In this example, we search in All index, products having keyword "harry_potter" (cf [amazon example](http://docs.aws.amazon.com/AWSECommerceService/latest/DG/EX_SearchingbyKeyword.html))
 
 ```php
 $client = new \AWSome\PAA\Client(<awsAccessKeyId>, <awsSecretAccessKey>);
 $query = $client->itemSearch();
 $query->setSearchIndex('All');
-$query->addQueryParameter('Keywords', "harry_potter");
+$query->setKeywords("harry_potter");
 $result = $client->execute($query);
 ```
 
-And the response :
+And the result :
 
 ```php
 array (

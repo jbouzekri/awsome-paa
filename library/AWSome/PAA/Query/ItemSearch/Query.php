@@ -45,4 +45,32 @@ class Query extends CoreQuery
 
         return $this;
     }
+
+    /**
+     * Set Keywords parameter
+     *
+     * @param string $keywords
+     *
+     * @return \AWSome\PAA\Query\ItemSearch\Query
+     */
+    public function setKeywords($keywords)
+    {
+        $this->addQueryParameter("Keywords", $keywords);
+
+        return $this;
+    }
+
+    /**
+     * Set Title parameter
+     *
+     * @param string $title the title you want to search
+     *
+     * @return \AWSome\PAA\Query\ItemSearch\Query
+     */
+    public function setTitle($title)
+    {
+        $this->addQueryParameter("Title", $title);
+
+        return $this;
+    }
 }
