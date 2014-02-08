@@ -43,6 +43,7 @@ Examples
     * [Searching by Title](doc/ItemSearch/searching_by_title.md)
     * [Searching by Manufacturer](doc/ItemSearch/searching_by_manufacturer.md)
     * [Searching by Author](doc/ItemSearch/searching_by_author.md)
+    * [Searching by Actor](doc/ItemSearch/searching_by_actor.md)
 
 Roadmap
 -------

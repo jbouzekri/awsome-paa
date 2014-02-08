@@ -101,4 +101,18 @@ class Query extends CoreQuery
 
         return $this;
     }
+
+    /**
+     * Set Actor parameter
+     *
+     * @param string $actor the actor you want to search
+     *
+     * @return \AWSome\PAA\Query\ItemSearch\Query
+     */
+    public function setActor($actor)
+    {
+        $this->addQueryParameter("Actor", $actor);
+
+        return $this;
+    }
 }
