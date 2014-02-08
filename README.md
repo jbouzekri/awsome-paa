@@ -38,7 +38,7 @@ Add the repository to the composer.json file of your project and run the update 
 Examples
 --------
 
-* ItemSearch Queries : find products on Amazon
+* ItemSearch Queries : The ItemSearch operation returns items that satisfy the search criteria, including one or more search indices.
     * [Searching by Keyword](doc/ItemSearch/searching_by_keyword.md)
     * [Searching by Title](doc/ItemSearch/searching_by_title.md)
     * [Searching by Manufacturer](doc/ItemSearch/searching_by_manufacturer.md)
@@ -46,6 +46,8 @@ Examples
     * [Searching by Actor](doc/ItemSearch/searching_by_actor.md)
     * [Searching by Theme](doc/ItemSearch/searching_by_theme.md)
     * [Searching by Theme in a Specific Category](doc/ItemSearch/searching_by_theme_in_category.md)
+* ItemLookup Queries : Given an Item identifier, the ItemLookup operation returns some or all of the item attributes, depending on the response group specified in the request
+    * [Lookup by UPC](doc/ItemLookup/searching_by_upc.md)
 
 Roadmap
 -------
