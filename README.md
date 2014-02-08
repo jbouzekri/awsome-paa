@@ -41,6 +41,7 @@ Examples
 * ItemSearch Queries : find products on Amazon
     * [Searching by Keyword](doc/ItemSearch/searching_by_keyword.md)
     * [Searching by Title](doc/ItemSearch/searching_by_title.md)
+    * [Searching by Manufacturer](doc/ItemSearch/searching_by_manufacturer.md)
 
 Roadmap
 -------

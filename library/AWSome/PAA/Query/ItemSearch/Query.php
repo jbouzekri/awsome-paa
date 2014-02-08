@@ -73,4 +73,18 @@ class Query extends CoreQuery
 
         return $this;
     }
+
+    /**
+     * Set manufacturer parameter
+     *
+     * @param string $manufacturer the manufacturer you want to search
+     *
+     * @return \AWSome\PAA\Query\ItemSearch\Query
+     */
+    public function setManufacturer($manufacturer)
+    {
+        $this->addQueryParameter("Manufacturer", $manufacturer);
+
+        return $this;
+    }
 }
