@@ -39,7 +39,8 @@ class Client
      * @var array
      */
     private $queryTypes = array(
-        "ItemSearch" => "AWSome\\PAA\\Query\\ItemSearch\\Query"
+        "ItemSearch" => "AWSome\\PAA\\Query\\ItemSearch\\Query",
+        "ItemLookup" => "AWSome\\PAA\\Query\\ItemLookup\\Query",
     );
 
     /**
@@ -94,6 +95,16 @@ class Client
     public function itemSearch()
     {
         return $this->createQuery("ItemSearch");
+    }
+
+    /**
+     * Shortcut to create an item search query
+     *
+     * @return \AWSome\PAA\Core\Query
+     */
+    public function itemLookup()
+    {
+        return $this->createQuery("ItemLookup");
     }
 
     /**
